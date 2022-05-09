@@ -1,0 +1,26 @@
+version: '3'
+services:
+  enlance:
+    container_name: enlance
+    build: .
+    ports:
+      - "5004:80"
+    volumes:
+      - .:/var/www/html
+  enlance-db:
+    container_name: enlance-db
+    command: mysqld --character-set-server=utf8 --ssl=0 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    image: mysql:8.0.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=q0e8t6u4o
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=enlance
+    ports:
+      - "8000:3306"
+    volumes:
+      - /var/docker/volumes/enlance-db:/var/lib/mysql
+networks:
+  default:
+    external:
+      name: internal
