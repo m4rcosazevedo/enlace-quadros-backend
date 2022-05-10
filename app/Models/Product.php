@@ -25,7 +25,7 @@ class Product extends Model
 
     public function categories ()
     {
-        return $this->belongsToMany(Category::class, 'categories_products');
+        return $this->belongsToMany(Category::class);
     }
 
     public function view()
@@ -54,6 +54,9 @@ class Product extends Model
 
     public function scopeFeatured ($query)
     {
-        return $query->orderBy('featured', 'asc')->orderBy('updated_at', 'desc');
+        return $query
+            ->orderBy('featured', 'desc')
+            ->orderBy('updated_at', 'asc')
+            ->orderBy('id', 'desc');
     }
 }

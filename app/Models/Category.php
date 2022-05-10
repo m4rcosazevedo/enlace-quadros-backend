@@ -37,10 +37,6 @@ class Category extends Model
         return $this->hasMany(Category::class, 'category_id');
     }
 
-    public function products () {
-        return $this->hasMany(Product::class);
-    }
-
     public function setDefaultValue (string $field, mixed $value, mixed $defaultValue)
     {
         return $this->attributes[$field] = empty($value) ? $defaultValue : $value;
@@ -48,6 +44,14 @@ class Category extends Model
 
     public function scopeOrderDesc ($query) {
         return $query->orderBy('id', 'desc');
+    }
+
+    public function scopePosition ($query) {
+        return $query->orderBy('position', 'asc');
+    }
+
+    public function scopeWithChildren ($query) {
+        return $query->has('children');
     }
 
     public function getCategoryWithParentAttribute()
