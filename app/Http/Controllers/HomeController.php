@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Newsletter;
+use App\Models\Product;
+use Illuminate\Contracts\Support\Renderable;
 
 class HomeController extends Controller
 {
@@ -19,10 +22,28 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
-        return view('home');
+        $categories = Category::count();
+
+        $lastProducts = Product::orderDesc()->paginate(10);
+        $productsActives = Product::active()->count();
+        $products = Product::count();
+
+        $lastNewsletters = Newsletter::orderDesc()->paginate(20);
+        $newsletter = Newsletter::count();
+        $newsletterActives = Newsletter::active()->count();
+
+        return view('dashboard', compact(
+            'categories',
+            'products',
+            'productsActives',
+            'lastProducts',
+            'newsletter',
+            'newsletterActives',
+            'lastNewsletters',
+        ));
     }
 }

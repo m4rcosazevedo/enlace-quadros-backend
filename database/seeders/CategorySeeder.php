@@ -53,6 +53,7 @@ class CategorySeeder extends Seeder
             ["id" => 36, "name" => "Pais", "category_id" => 22],
             ["id" => 37, "name" => "Natureza", "category_id" => 22],
             ["id" => 38, "name" => "Pôsters", "category_id" => 22],
+            ["id" => 39, "name" => "Jogos e Games", "category_id" => 22],
         ];
 
         if (!Category::get()->count()) {

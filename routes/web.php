@@ -10,9 +10,9 @@ $router->get('/', function () {
 
 Auth::routes();
 
-$router->get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 $router->group(['middleware' => ['auth'], 'prefix' => 'admin'], function () use ($router) {
+    $router->get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
     $router->group(['prefix' => 'category'], function () use ($router) {
         $router->get('/', 'App\Http\Controllers\CategoryController@index')->name('category.index');
         $router->get('/new', 'App\Http\Controllers\CategoryController@create')->name('category.create');
@@ -29,6 +29,15 @@ $router->group(['middleware' => ['auth'], 'prefix' => 'admin'], function () use 
         $router->get('/{id}', 'App\Http\Controllers\ProductController@edit')->name('product.edit');
         $router->put('/{id}', 'App\Http\Controllers\ProductController@update')->name('product.update');
         $router->delete('/{id}', 'App\Http\Controllers\ProductController@destroy')->name('product.destroy');
+    });
+
+    $router->group(['prefix' => 'newsletter'], function () use ($router) {
+        $router->get('/', 'App\Http\Controllers\NewsletterController@index')->name('newsletter.index');
+        $router->get('/new', 'App\Http\Controllers\NewsletterController@create')->name('newsletter.create');
+        $router->post('/new', 'App\Http\Controllers\NewsletterController@store')->name('newsletter.store');
+        $router->get('/{id}', 'App\Http\Controllers\NewsletterController@edit')->name('newsletter.edit');
+        $router->put('/{id}', 'App\Http\Controllers\NewsletterController@update')->name('newsletter.update');
+        $router->delete('/{id}', 'App\Http\Controllers\NewsletterController@destroy')->name('newsletter.destroy');
     });
 });
 
