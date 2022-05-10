@@ -11,4 +11,11 @@ class ProductFilter extends BaseFilter
             return $query->where('name', 'like', "%{$search}%");
         })->orWhere('name', 'like', "%{$search}%");
     }
+
+    public function category($value)
+    {
+        $this->builder->whereHas('categories', function ($query) use ($value) {
+            return $query->where('slug', $value);
+        });
+    }
 }

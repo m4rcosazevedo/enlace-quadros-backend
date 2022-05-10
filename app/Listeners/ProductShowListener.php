@@ -14,6 +14,6 @@ class ProductShowListener implements ShouldQueue
 
     public function handle(ProductShowEvent $event)
     {
-        $event->getSteamItem()->incrementView();
+        $event->getProduct()->incrementView();
     }
 }

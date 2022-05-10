@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ProductShowEvent;
 use App\Filters\ProductFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Cache;
 
 class ProductsController extends Controller
 {
     public function index (ProductFilter $filter): JsonResource {
-        return ProductResource::collection(
-            $this->paginate(Product::filter($filter)->active()->featured())
-        );
+        $route = '/product/index';
+
+        if (!Cache::has($route) or !empty(request()->query())) {
+            $products = ProductResource::collection(
+                $this->paginate(Product::filter($filter)->active()->featured())
+            );
+            Cache::put($route, $products, 30);
+        }
+
+        return Cache::get($route);
     }
 
     public function show (string $categorySlug, string $slug) {
@@ -23,7 +32,10 @@ class ProductsController extends Controller
                     $query->where('categories.slug', $categorySlug);
                 })->active()->where('slug', $slug)->first();
 
-            if ($product) return ProductResource::make($product);
+            if ($product) {
+                event(new ProductShowEvent($product));
+                return ProductResource::make($product);
+            }
 
             return response()->json([
                 'code' => 404,

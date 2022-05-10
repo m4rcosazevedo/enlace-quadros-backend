@@ -17,9 +17,9 @@ class ProductShowEvent
     }
 
     /**
-     * @return mixed
+     * @return Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
