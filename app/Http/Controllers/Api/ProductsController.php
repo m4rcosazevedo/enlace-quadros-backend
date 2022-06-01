@@ -15,22 +15,18 @@ use Illuminate\Support\Facades\Cache;
 class ProductsController extends Controller
 {
     public function index (ProductFilter $filter): JsonResource {
-        $route = '/product/index';
-
-        if (!Cache::has($route) or !empty(request()->query())) {
             $params = request()->query();
-            $category = CategoryParentResource::make(
-                Category::where('slug', $params['category'])->first()
-            );
+            $categorySlug = $params['category'] ?? null;
 
-            $products = ProductResource::collection(
-                $this->paginate(Product::filter($filter)->active()->featured())
-            )->additional(['category' => $category]);
+            $category = Category::where('slug', $categorySlug)->first();
 
-            Cache::put($route, $products, 30);
-        }
+            $category = (!empty($categorySlug) && !empty($category))
+                ? CategoryParentResource::make($category)
+                : null;
 
-        return Cache::get($route);
+        return ProductResource::collection(
+            $this->paginate(Product::filter($filter)->active()->featured())
+        )->additional(['category' => $category]);
     }
 
     public function show (string $categorySlug, string $slug) {
