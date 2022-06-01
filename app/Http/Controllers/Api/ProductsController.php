@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Events\ProductShowEvent;
 use App\Filters\ProductFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryParentResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Cache;
@@ -16,10 +18,18 @@ class ProductsController extends Controller
         $route = '/product/index';
 
         if (!Cache::has($route) or !empty(request()->query())) {
+            $params = request()->query();
+            $category = CategoryParentResource::make(
+                Category::where('slug', $params['category'])->first()
+            );
             $products = ProductResource::collection(
                 $this->paginate(Product::filter($filter)->active()->featured())
             );
-            Cache::put($route, $products, 30);
+
+            Cache::put($route, JsonResource::make([
+                'category' => $category,
+                'products' => $products
+            ]), 30);
         }
 
         return Cache::get($route);

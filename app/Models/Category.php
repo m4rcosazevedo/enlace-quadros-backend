@@ -57,6 +57,5 @@ class Category extends Model
     public function getCategoryWithParentAttribute()
     {
         return "{$this->name} - ({$this->parent->name})";
-
     }
 }
