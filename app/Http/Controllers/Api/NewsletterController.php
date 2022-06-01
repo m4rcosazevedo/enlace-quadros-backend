@@ -21,7 +21,7 @@ class NewsletterController extends Controller
             return response()->json([
                 'code' => 201,
                 'message' => 'Cadastro realizado com sucesso',
-            ])->setStatusCode(404);
+            ])->setStatusCode(201);
         } catch (\Exception $e) {
             return response()->json([
                 'code' => $e->getCode(),
