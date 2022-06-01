@@ -22,14 +22,12 @@ class ProductsController extends Controller
             $category = CategoryParentResource::make(
                 Category::where('slug', $params['category'])->first()
             );
+
             $products = ProductResource::collection(
                 $this->paginate(Product::filter($filter)->active()->featured())
-            );
+            )->additional(['category' => $category]);
 
-            Cache::put($route, JsonResource::make([
-                'category' => $category,
-                'products' => $products
-            ]), 30);
+            Cache::put($route, $products, 30);
         }
 
         return Cache::get($route);
