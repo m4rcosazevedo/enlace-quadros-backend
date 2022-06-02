@@ -196,6 +196,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Laracasts\Flash\FlashServiceProvider::class,
+
+        //AWS S3
+        Aws\Laravel\AwsServiceProvider::class,
     ],
 
     /*
@@ -211,6 +214,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'AWS' => Aws\Laravel\AwsFacade::class,
     ])->toArray(),
 
 ];
