@@ -43,5 +43,14 @@ $router->group(['middleware' => ['auth'], 'prefix' => 'admin'], function () use 
         $router->put('/{id}', 'App\Http\Controllers\NewsletterController@update')->name('newsletter.update');
         $router->delete('/{id}', 'App\Http\Controllers\NewsletterController@destroy')->name('newsletter.destroy');
     });
+
+    $router->group(['prefix' => 'file'], function () use ($router) {
+        $router->get('/', 'App\Http\Controllers\FileController@index')->name('file.index');
+        $router->get('/new', 'App\Http\Controllers\FileController@create')->name('file.create');
+        $router->post('/new', 'App\Http\Controllers\FileController@store')->name('file.store');
+        $router->get('/{id}', 'App\Http\Controllers\FileController@edit')->name('file.edit');
+        $router->put('/{id}', 'App\Http\Controllers\FileController@update')->name('file.update');
+        $router->delete('/{id}', 'App\Http\Controllers\FileController@destroy')->name('file.destroy');
+    });
 });
 

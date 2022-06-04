@@ -17,11 +17,13 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug');
+            $table->foreignId('image_id')->nullable();
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
             $table->boolean('featured')->default(false);
             $table->boolean('active')->default(true);
             $table->timestamps();
+
+            $table->foreign('image_id')->references('id')->on('files')->onDelete('cascade');
         });
     }
 

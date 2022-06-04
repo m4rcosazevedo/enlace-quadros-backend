@@ -20,6 +20,7 @@ class MenuSeeder extends Seeder
                 ['title' => 'Categorias', 'uri' => 'category', 'icon' => 'fas fa-tags', 'active' => true],
                 ['title' => 'Produtos', 'uri' => 'product', 'icon' => 'fas fa-shopping-bag', 'active' => true],
                 ['title' => 'Newsletter', 'uri' => 'newsletter', 'icon' => 'fas fa-mail-bulk', 'active' => true],
+                ['title' => 'Files', 'uri' => 'file', 'icon' => 'fas fa-image', 'active' => true],
             ]);
         }
     }

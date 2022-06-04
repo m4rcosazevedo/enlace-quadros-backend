@@ -13,7 +13,7 @@ class ProductResource extends JsonResource
             "name" => $this->name,
             "slug" => $this->slug,
             "description" => $this->description,
-            "image" => $this->image,
+            "image" => FileResource::make($this->image),
             "featured" => $this->featured,
             "active" => $this->active,
             "categories" => CategoryParentResource::collection($this->categories),

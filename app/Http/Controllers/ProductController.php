@@ -7,15 +7,28 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
+use App\Models\File;
 use App\Models\Product;
-use Illuminate\Support\Arr;
+use App\Services\StorageService;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    protected StorageService $storage_service;
+    protected Product $product;
+    protected File $file;
+    protected string $file_path;
+
+    public function __construct (Product $product, StorageService $storage_service, File $file) {
+        $this->storage_service = $storage_service;
+        $this->product = $product;
+        $this->file = $file;
+        $this->file_path = "files/";
+    }
+
     public function index (ProductFilter $filter) {
         $products = ProductResource::collection(
-            $this->paginate(Product::filter($filter)->orderDesc())
+            $this->paginate($this->product->filter($filter)->orderDesc())
         );
 
         return view('products.index', compact('products'));
@@ -27,17 +40,20 @@ class ProductController extends Controller
     }
 
     public function store (ProductRequest $request) {
-
         $data = $request->only('featured', 'active', 'name', 'description');
 
         try {
-
             if ($request->hasFile('image') and $request->image->isValid()) {
-                $imagePath = $request->image->store('products');
-                $data['image'] = $imagePath;
+
+                $image = $this->file->create([
+                    "filename" => $this->storage_service->save($this->file_path, $request->image),
+                    "description" => $request->name,
+                ]);
+
+                $data['image_id'] = $image->id;
             }
 
-            $product = Product::create($data);
+            $product = $this->product->create($data);
             $this->saveCategories($request, $product);
 
             flash('Produto criado com sucesso.')->success();
@@ -50,7 +66,7 @@ class ProductController extends Controller
 
     public function edit(int $id)
     {
-        $product = Product::findOrFail($id);
+        $product = $this->product->findOrFail($id);
         $categories = $this->categories();
 
         return view('products.form',  compact('product', 'categories'));
@@ -61,15 +77,19 @@ class ProductController extends Controller
         $data = $request->only("name", "description", "featured", "active");
 
         try {
-            $product = Product::findOrFail($id);
+            $product = $this->product->findOrFail($id);
 
             if ($request->hasFile('image') and $request->image->isValid()) {
-                if ($product->image and Storage::exists($product->image)) {
-                    Storage::delete($product->image);
+                if ($product->image) {
+                    $this->storage_service->delete($this->file_path, $product->image->filename);
                 }
 
-                $imagePath = $request->image->store('products');
-                $data['image'] = $imagePath;
+                $image = $this->file->create([
+                    "filename" => $this->storage_service->save($this->file_path, $request->image),
+                    "description" => $request->name,
+                ]);
+
+                $data['image_id'] = $image->id;
             }
 
             $product->update([
@@ -77,7 +97,7 @@ class ProductController extends Controller
                 "description" => $data["description"] ?? null,
                 "featured" => $data["featured"] ?? false,
                 "active" => $data["active"] ?? false,
-                "image" => $data['image'] ?? $product->image
+                "image_id" => $data['image_id'] ?? $product->image->id
             ]);
             $this->saveCategories($request, $product);
 
@@ -91,10 +111,12 @@ class ProductController extends Controller
 
     public function destroy (int $id) {
         try {
-            $product = Product::findOrFail($id);
+            $product = $this->product->findOrFail($id);
 
-            if ($product->image and Storage::exists($product->image)) {
-                Storage::delete($product->image);
+            if ($product->image) {
+                //$file = $this->file->findOrFail($product->image->id);
+                $this->storage_service->delete($this->file_path, $product->image->filename);
+                //$file->delete();
             }
 
             $product->delete();

@@ -37,7 +37,7 @@
             <div class="col-md-9">
                 @if( isset($product) && $product->image)
                     <div>
-                        <img class="img-fluid w-25 img-bordered" src="{{ url('storage/' . $product->image) }}" alt="{{ $product->name }}">
+                        <img class="img-fluid w-25 img-bordered" src="{{ $product->image->url }}" alt="{{ $product->image->filename }}">
                     </div>
                 @endif
                 {!! Form::file('image') !!}

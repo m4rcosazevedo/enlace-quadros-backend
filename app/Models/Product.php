@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory, Filterable;
 
-    protected $fillable = ["name", "featured", "active", "description", "image"];
+    protected $fillable = ["name", "featured", "active", "description", "image_id"];
 
     public function setNameAttribute($value)
     {
@@ -26,6 +26,11 @@ class Product extends Model
     public function categories ()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function image ()
+    {
+        return $this->belongsTo(File::class);
     }
 
     public function view()

@@ -56,18 +56,35 @@
                     title="Categorias"
                     icon="fa-tags"
                 />
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Últimas newsletters</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="products-list products-list-in-card">
+                            @foreach($lastNewsletters as $newsletter)
+                                <div class="item">
+                                    <a class="product-title" href="{{ route('newsletter.edit', $newsletter->id) }}">
+                                        {{ $newsletter->email }}
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-9 col-12">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Produtos recentes</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="products-list products-list-in-card">
-                                    @foreach($lastProducts as $product)
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Produtos recentes</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="products-list products-list-in-card">
+                            <div class="row">
+                                @foreach($lastProducts as $product)
+                                    <div class="col-12 col-md-6">
                                         <div class="item">
                                             <div class="product-img">
                                                 <img src="{{ url("storage/{$product->image}") }}" alt="{{ $product->name  }}" class="img-size-64">
@@ -83,27 +100,8 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-lg-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Últimas newsletters</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="products-list products-list-in-card">
-                                    @foreach($lastNewsletters as $newsletter)
-                                        <div class="item">
-                                            <a class="product-title" href="{{ route('newsletter.edit', $newsletter->id) }}">
-                                                {{ $newsletter->email }}
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

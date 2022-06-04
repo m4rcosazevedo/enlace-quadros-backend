@@ -1,7 +1,7 @@
 @extends("layouts.admin", [
-    "title" => "Listagem de Produtos",
+    "title" => "Listagem de Images",
     "breadcrumb" => [
-        [ "label" => "Produtos" ]
+        [ "label" => "Images" ]
     ]
 ])
 
@@ -9,12 +9,12 @@
 
     <div class="row">
         <div class="col-md-6">
-            <x-admin.index-form-search route="product.index" />
+            <x-admin.index-form-search route="file.index" />
         </div>
 
         <div class="col-md-6 text-right">
-            <a href="{{ route("product.create") }}" class="btn btn-info">
-                <i class="fa fa-plus"></i> Novo Produto
+            <a href="{{ route("file.create") }}" class="btn btn-info">
+                <i class="fa fa-plus"></i> Nova Imagem
             </a>
         </div>
     </div>
@@ -25,33 +25,22 @@
             <tr>
                 <th>ID</th>
                 <th>Imagem</th>
-                <th>Nome</th>
-                <th>Categorias</th>
-                <th>Em destaque</th>
-                <th>Ativo</th>
+                <th>Descrição</th>
                 <th class="text-right">Ações</th>
             </tr>
             </thead>
             <tbody>
-            @forelse ($products as $product)
+            @forelse ($files as $file)
                 <tr>
-                    <td>{{ $product->id }}</td>
+                    <td>{{ $file->id }}</td>
                     <td>
-                        @if($product->image)
-                            <img src="{{ $product->image->url }}" class="img-size-64" alt="{{ $product->image->filename  }}" />
+                        @if($file->filename)
+                            <img src="{{ $file->url }}" class="img-size-64" alt="{{ $file->url }}" />
                         @endif
                     </td>
-                    <td>{{ $product->name }}</td>
-                    <td>
-                        @foreach($product->categories as $cat)
-                            {{ $cat->name }}
-                            @if(!$loop->last), @endif
-                        @endforeach
-                    </td>
-                    <td><x-active active="{{ $product->featured }}" /></td>
-                    <td><x-active active="{{ $product->active }}" /></td>
+                    <td>{{ $file->description }}</td>
                     <td class="text-right">
-                        <a class="btn btn-success btn-sm" href="{{ route('product.edit', $product->id) }}">
+                        <a class="btn btn-success btn-sm" href="{{ route('file.edit', $file->id) }}">
                             <i class="fa fa-edit"></i> Editar
                         </a>
                     </td>
@@ -69,7 +58,7 @@
             </tbody>
         </table>
 
-        {!! $products->links() !!}
+        {!! $files->links() !!}
 
     </div>
 @endsection
