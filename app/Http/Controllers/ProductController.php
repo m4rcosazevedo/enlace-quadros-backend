@@ -10,7 +10,7 @@ use App\Models\Category;
 use App\Models\File;
 use App\Models\Product;
 use App\Services\StorageService;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
