@@ -1,7 +1,7 @@
 @extends("layouts.admin", [
-    "title" => "Listagem de Images",
+    "title" => "Listagem de Arquivos",
     "breadcrumb" => [
-        [ "label" => "Images" ]
+        [ "label" => "Arquivos" ]
     ]
 ])
 
@@ -14,7 +14,7 @@
 
         <div class="col-md-6 text-right">
             <a href="{{ route("file.create") }}" class="btn btn-info">
-                <i class="fa fa-plus"></i> Nova Imagem
+                <i class="fa fa-plus"></i> Novo Arquivo
             </a>
         </div>
     </div>
@@ -38,7 +38,7 @@
                             <img src="{{ $file->url }}" class="img-size-64" alt="{{ $file->urlThumbnail }}" />
                         @endif
                     </td>
-                    <td>{{ $file->description }}</td>
+                    <td>{!! \Illuminate\Support\Str::markdown($file->description)  !!}</td>
                     <td class="text-right">
                         <a class="btn btn-success btn-sm" href="{{ route('file.edit', $file->id) }}">
                             <i class="fa fa-edit"></i> Editar

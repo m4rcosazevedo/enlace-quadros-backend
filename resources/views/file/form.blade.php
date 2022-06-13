@@ -3,14 +3,13 @@
 @extends("layouts.admin", [
     "title" => $title,
     "breadcrumb" => [
-        [ "label" => "Arquivos", "route" => "product.index" ],
+        [ "label" => "Arquivos", "route" => "file.index" ],
         [ "label" => $title ]
     ]
 ])
 
 @section('main')
     <x-form.model route="file" :model="$file ?? null" enctype="multipart/form-data"/>
-
 
         <div class="form-group row">
             {!! Form::label(null, 'Imagem *', ["class" => "col-sm-2 col-form-label"]) !!}

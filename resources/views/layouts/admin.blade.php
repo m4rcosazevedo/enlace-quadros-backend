@@ -1,7 +1,11 @@
 @extends('adminlte::page')
 
 @section('css')
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+@endsection
+
+@section('js')
+    <script src="{{ asset('js/app.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -14,11 +18,11 @@
                             <ol class="breadcrumb bg-transparent">
                                 @foreach($breadcrumb as $item)
                                     @if($loop->last)
-                                        <li class="breadcrumb-item active" aria-current="page">{{ $item['label'] }}</li>
+                                        <li class="breadcrumb-item active" aria-current="page">{!! strip_tags(\Illuminate\Support\Str::markdown($item['label'], ['html_input' => 'strip' ])) !!}</li>
                                     @else
                                         <li class="breadcrumb-item" aria-current="page">
                                             <a href="{{ route($item['route']) }}">
-                                                {{ $item['label'] }}
+                                                {!! strip_tags(\Illuminate\Support\Str::markdown($item['label'], [ 'html_input' => 'strip' ])) !!}
                                             </a>
                                         </li>
                                     @endif
@@ -34,7 +38,7 @@
     <div class="card">
         @if(!empty($title))
             <div class="card-header">
-                <h3 class="card-title">{{ $title }}</h3>
+                <h3 class="card-title">{!! \Illuminate\Support\Str::markdown($title) !!}</h3>
             </div>
         @endif
 
