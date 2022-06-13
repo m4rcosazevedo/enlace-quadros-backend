@@ -11,6 +11,7 @@ class FileResource extends JsonResource
         return [
             "filename" => 'files/' . $this->filename,
             "url" => [
+                "filename" => 'files/' . $this->filename,
                 "origin" => env('AWS_URL_CLOUDFRONT'),
                 "thumbnail" => $this->urlThumbnail,
                 "large" => $this->urlLarge,
