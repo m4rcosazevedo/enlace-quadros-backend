@@ -35,7 +35,7 @@
                     <td>{{ $file->id }}</td>
                     <td>
                         @if($file->filename)
-                            <img src="{{ $file->url }}" class="img-size-64" alt="{{ $file->url }}" />
+                            <img src="{{ $file->url }}" class="img-size-64" alt="{{ $file->urlThumbnail }}" />
                         @endif
                     </td>
                     <td>{{ $file->description }}</td>

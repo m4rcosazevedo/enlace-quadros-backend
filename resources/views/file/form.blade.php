@@ -17,7 +17,7 @@
             <div class="col-md-9">
                 @if( isset($file) && $file->filename)
                     <div>
-                        <img class="img-fluid w-25 img-bordered" src="{{ $file->url }}" alt="{{ $file->description }}">
+                        <img class="img-fluid w-25 img-bordered" src="{{ $file->urlLarge }}" alt="{{ $file->description }}">
                     </div>
                 @endif
                 {!! Form::file('filename') !!}

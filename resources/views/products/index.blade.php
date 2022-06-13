@@ -38,7 +38,7 @@
                     <td>{{ $product->id }}</td>
                     <td>
                         @if($product->image)
-                            <img src="{{ $product->image->url }}" class="img-size-64" alt="{{ $product->image->filename  }}" />
+                            <img src="{{ $product->image->urlThumbnail }}" class="img-size-64" alt="{{ $product->image->filename  }}" />
                         @endif
                     </td>
                     <td>{{ $product->name }}</td>

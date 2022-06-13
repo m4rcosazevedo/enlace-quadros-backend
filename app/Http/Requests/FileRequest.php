@@ -9,7 +9,7 @@ class FileRequest extends FormRequest
     public function rules()
     {
         return [
-            'filename' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'filename' => 'required|image|mimes:jpeg,png,jpg,gif|max:1000',
             'description' => 'required'
         ];
     }
@@ -20,7 +20,8 @@ class FileRequest extends FormRequest
             'description.required' => 'O campo descrição é obrigatório',
             'filename.required' => 'O campo imagem é obrigatório',
             'filename.mimes' => 'Só é permitida as seguintes extensões: jpeg,png,jpg,gif',
-            'filename.image' => 'A imagem não é válida'
+            'filename.image' => 'A imagem não é válida',
+            'filename.max' => 'A imagem não é pode ser maior que 1mb'
         ];
     }
 }

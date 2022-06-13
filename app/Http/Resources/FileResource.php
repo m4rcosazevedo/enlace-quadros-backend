@@ -9,8 +9,12 @@ class FileResource extends JsonResource
     public function toArray($request)
     {
         return [
-            "filename" => $this->filename,
-            "url" => $this->url,
+            "filename" => 'files/' . $this->filename,
+            "url" => [
+                "origin" => env('AWS_URL_CLOUDFRONT'),
+                "thumbnail" => $this->urlThumbnail,
+                "large" => $this->urlLarge,
+            ],
             "description" => $this->description
         ];
     }
