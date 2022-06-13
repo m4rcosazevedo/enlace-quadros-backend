@@ -84,10 +84,12 @@
                         <div class="products-list products-list-in-card">
                             <div class="row">
                                 @foreach($lastProducts as $product)
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-6 mb-3">
                                         <div class="item">
                                             <div class="product-img">
-                                                <img src="{{ url("storage/{$product->image}") }}" alt="{{ $product->name  }}" class="img-size-64">
+                                                @if($product->image)
+                                                    <img src="{{ $product->image->urlThumbnail }}" alt="{{ $product->name  }}" class="img-size-64">
+                                                @endif
                                             </div>
                                             <div class="product-info">
                                                 <a class="product-title" href="{{ route('product.edit', $product->id) }}">
