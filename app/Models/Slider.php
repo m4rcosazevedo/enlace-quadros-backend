@@ -6,11 +6,13 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Util\Filterable\Filterable;
-use function PHPUnit\Framework\isNull;
 
 class Slider extends Model
 {
     use HasFactory, Filterable;
+
+    const ACTIVE = 1;
+    const INACTIVE = 0;
 
     private string $CLOUDFRONT_URL;
 
@@ -42,7 +44,7 @@ class Slider extends Model
         $now = Carbon::now(-3)->startOfMinute();
 
         return $query
-            ->where('active', 1)
+            ->where('active', self::ACTIVE)
             ->where(function ($query) use ($now) {
                 $query
                     ->where('start_at', "<=", $now)
