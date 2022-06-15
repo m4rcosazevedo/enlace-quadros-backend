@@ -31115,7 +31115,6 @@ if (el) {
     initialEditType: 'markdown'
   });
   var content = document.querySelector('#oldContent');
-  console.log(content.value);
 
   if (content) {
     editor.setMarkdown(content.value);

@@ -52,5 +52,14 @@ $router->group(['middleware' => ['auth'], 'prefix' => 'admin'], function () use 
         $router->put('/{id}', 'App\Http\Controllers\FileController@update')->name('file.update');
         $router->delete('/{id}', 'App\Http\Controllers\FileController@destroy')->name('file.destroy');
     });
+
+    $router->group(['prefix' => 'slider'], function () use ($router) {
+        $router->get('/', 'App\Http\Controllers\SliderController@index')->name('slider.index');
+        $router->get('/new', 'App\Http\Controllers\SliderController@create')->name('slider.create');
+        $router->post('/new', 'App\Http\Controllers\SliderController@store')->name('slider.store');
+        $router->get('/{id}', 'App\Http\Controllers\SliderController@edit')->name('slider.edit');
+        $router->put('/{id}', 'App\Http\Controllers\SliderController@update')->name('slider.update');
+        $router->delete('/{id}', 'App\Http\Controllers\SliderController@destroy')->name('slider.destroy');
+    });
 });
 

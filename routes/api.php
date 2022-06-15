@@ -25,3 +25,5 @@ $router->get('/products', [App\Http\Controllers\Api\ProductsController::class, '
 $router->get('/products/{categorySlug}/{slug}', [App\Http\Controllers\Api\ProductsController::class, 'show']);
 
 $router->post('/newsletter', [App\Http\Controllers\Api\NewsletterController::class, 'store']);
+
+$router->get('/sliders', [App\Http\Controllers\Api\SlidersController::class, 'index']);
