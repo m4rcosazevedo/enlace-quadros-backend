@@ -17,4 +17,11 @@ class ProductFilter extends BaseFilter
             return $query->where('slug', $value);
         });
     }
+
+    public function view ()
+    {
+        $this->builder->whereHas('view', function ($query) {
+            return $query->orderBy('views', 'desc');
+        });
+    }
 }
