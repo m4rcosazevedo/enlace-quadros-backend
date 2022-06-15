@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\DateService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -77,18 +78,13 @@ class Slider extends Model
         return $this->toDateHtmlInput($value);
     }
 
-    private function formatDate ($date, $format = 'Y-m-d\TH:i')
-    {
-        return Carbon::parse($date)->format($format);
-    }
-
     private function toDateHtmlInput ($date)
     {
-        return $date ? $this->formatDate($date) : null;
+        return DateService::format($date, 'Y-m-d\TH:i');
     }
 
     private function toDateString ($date)
     {
-        return $date ? $this->formatDate($date, 'd/m/Y H:i') : null;
+        return DateService::format($date, 'd/m/Y H:i');
     }
 }

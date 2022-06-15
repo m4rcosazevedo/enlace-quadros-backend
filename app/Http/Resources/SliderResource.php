@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\DateService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SliderResource extends JsonResource
@@ -17,8 +18,8 @@ class SliderResource extends JsonResource
                 "origin" => env('AWS_URL_CLOUDFRONT'),
             ],
             "active" => $this->active,
-            "startAt" => $this->start_at,
-            "endAt" => $this->end_at
+            "startAt" => DateService::format($this->start_at),
+            "endAt" => DateService::format($this->end_at)
         ];
     }
 }
